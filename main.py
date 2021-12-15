@@ -9,7 +9,8 @@ def generate_file():
         config.add_section("TOKENS")
         config.set("TOKENS", "API_PUBLIC_TOKEN", "")
         config.set("TOKENS", "API_PRIVATE_TOKEN", "")
-
+        config.add_section("BOT_NAME")
+        config.set("BOT_NAME", "NAME", "")
         with open("config.ini", 'w') as configfile:
             config.write(configfile) #Write to the file
 
@@ -31,6 +32,7 @@ else:
     API_PRIVATE_KEY = config['KEYS']['api_private_key']
     API_PUBLIC_TOKEN = config['TOKENS']['api_public_token']
     API_PRIVATE_TOKEN = config['TOKENS']['api_private_token']
+    NAME = config['BOT_NAME']['name']
 auth = tweepy.OAuthHandler(API_PUBLIC_KEY, API_PRIVATE_KEY)
 auth.set_access_token(API_PUBLIC_TOKEN, API_PRIVATE_TOKEN)
 api = tweepy.API(auth, wait_on_rate_limit=True) #Right now I'm using this seperately since the API shits itself if I do something else.
@@ -122,4 +124,4 @@ def post_video(mentioner, user_replied_to, mentioner_status_id):
 def send_msg(user_replied_to, contents):
     print(contents)
 printer = IDPrinter(API_PUBLIC_KEY, API_PRIVATE_KEY, API_PUBLIC_TOKEN, API_PRIVATE_TOKEN) #credentials
-printer.filter(track=["@botnamehere"]) #search for lol I guess
+printer.filter(track=[NAME]) #search for lol I guess
